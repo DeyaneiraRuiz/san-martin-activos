@@ -1,7 +1,7 @@
 package com.cooperativasanmartinrl.activos.controller;
 
 import com.cooperativasanmartinrl.activos.entity.Area;
-import com.cooperativasanmartinrl.activos.repository.AreaRepository;
+import com.cooperativasanmartinrl.activos.service.AreaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,32 +13,31 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AreaController {
 
-    private final AreaRepository repo;
+    private final AreaService service;
 
     @GetMapping
     public ResponseEntity<List<Area>> listar() {
-        return ResponseEntity.ok(repo.findAll());
+        return ResponseEntity.ok(service.listar());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Area> obtener(@PathVariable Long id) {
+        return ResponseEntity.ok(service.obtener(id));
     }
 
     @PostMapping
     public ResponseEntity<Area> crear(@RequestBody Area area) {
-        return ResponseEntity.ok(repo.save(area));
+        return ResponseEntity.ok(service.guardar(area));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Area> actualizar(@PathVariable Long id, @RequestBody Area data) {
-        return repo.findById(id)
-                .map(a -> {
-                    a.setNombre(data.getNombre());
-                    return ResponseEntity.ok(repo.save(a));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Area> actualizar(@PathVariable Long id, @RequestBody Area area) {
+        return ResponseEntity.ok(service.actualizar(id, area));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        if (!repo.existsById(id)) return ResponseEntity.notFound().build();
-        repo.deleteById(id);
+        service.eliminar(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,7 +1,7 @@
 package com.cooperativasanmartinrl.activos.controller;
 
 import com.cooperativasanmartinrl.activos.entity.Vulnerabilidad;
-import com.cooperativasanmartinrl.activos.repository.VulnerabilidadRepository;
+import com.cooperativasanmartinrl.activos.service.VulnerabilidadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,22 +13,31 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VulnerabilidadController {
 
-    private final VulnerabilidadRepository repo;
+    private final VulnerabilidadService service;
 
     @GetMapping
     public ResponseEntity<List<Vulnerabilidad>> listar() {
-        return ResponseEntity.ok(repo.findAll());
+        return ResponseEntity.ok(service.listar());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Vulnerabilidad> obtener(@PathVariable Long id) {
+        return ResponseEntity.ok(service.obtener(id));
     }
 
     @PostMapping
     public ResponseEntity<Vulnerabilidad> crear(@RequestBody Vulnerabilidad v) {
-        return ResponseEntity.ok(repo.save(v));
+        return ResponseEntity.ok(service.guardar(v));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Vulnerabilidad> actualizar(@PathVariable Long id, @RequestBody Vulnerabilidad v) {
+        return ResponseEntity.ok(service.actualizar(id, v));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        if (!repo.existsById(id)) return ResponseEntity.notFound().build();
-        repo.deleteById(id);
+        service.eliminar(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,7 +1,7 @@
 package com.cooperativasanmartinrl.activos.controller;
 
 import com.cooperativasanmartinrl.activos.entity.Control;
-import com.cooperativasanmartinrl.activos.repository.ControlRepository;
+import com.cooperativasanmartinrl.activos.service.ControlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,33 +13,31 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ControlController {
 
-    private final ControlRepository repo;
+    private final ControlService service;
 
     @GetMapping
     public ResponseEntity<List<Control>> listar() {
-        return ResponseEntity.ok(repo.findAll());
+        return ResponseEntity.ok(service.listar());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Control> obtener(@PathVariable Long id) {
+        return ResponseEntity.ok(service.obtener(id));
     }
 
     @PostMapping
     public ResponseEntity<Control> crear(@RequestBody Control c) {
-        return ResponseEntity.ok(repo.save(c));
+        return ResponseEntity.ok(service.guardar(c));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Control> actualizar(@PathVariable Long id, @RequestBody Control data) {
-        return repo.findById(id)
-                .map(c -> {
-                    c.setDescripcion(data.getDescripcion());
-                    c.setTipo(data.getTipo());
-                    return ResponseEntity.ok(repo.save(c));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Control> actualizar(@PathVariable Long id, @RequestBody Control c) {
+        return ResponseEntity.ok(service.actualizar(id, c));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        if (!repo.existsById(id)) return ResponseEntity.notFound().build();
-        repo.deleteById(id);
+        service.eliminar(id);
         return ResponseEntity.noContent().build();
     }
 }

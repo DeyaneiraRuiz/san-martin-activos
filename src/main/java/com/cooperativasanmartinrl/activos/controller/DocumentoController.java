@@ -1,7 +1,7 @@
 package com.cooperativasanmartinrl.activos.controller;
 
 import com.cooperativasanmartinrl.activos.entity.Documento;
-import com.cooperativasanmartinrl.activos.repository.DocumentoRepository;
+import com.cooperativasanmartinrl.activos.service.DocumentoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,33 +13,31 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DocumentoController {
 
-    private final DocumentoRepository repo;
+    private final DocumentoService service;
 
     @GetMapping
     public ResponseEntity<List<Documento>> listar() {
-        return ResponseEntity.ok(repo.findAll());
+        return ResponseEntity.ok(service.listar());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Documento> obtener(@PathVariable Long id) {
+        return ResponseEntity.ok(service.obtener(id));
     }
 
     @PostMapping
     public ResponseEntity<Documento> crear(@RequestBody Documento d) {
-        return ResponseEntity.ok(repo.save(d));
+        return ResponseEntity.ok(service.guardar(d));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Documento> actualizar(@PathVariable Long id, @RequestBody Documento data) {
-        return repo.findById(id)
-                .map(d -> {
-                    d.setNombre(data.getNombre());
-                    d.setUrl(data.getUrl());
-                    return ResponseEntity.ok(repo.save(d));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Documento> actualizar(@PathVariable Long id, @RequestBody Documento d) {
+        return ResponseEntity.ok(service.actualizar(id, d));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        if (!repo.existsById(id)) return ResponseEntity.notFound().build();
-        repo.deleteById(id);
+        service.eliminar(id);
         return ResponseEntity.noContent().build();
     }
 }
