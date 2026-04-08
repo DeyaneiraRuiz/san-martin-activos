@@ -83,14 +83,15 @@ sgsi-backend/
 ## 🚀 Instalación y Despliegue Local
 
 ### 0. Clonar el repositorio
-Abre una terminal y clona el proyecto en tu máquina usando la URL de tu repositorio (reemplaza `TU_USUARIO` y `TU_REPO` por los datos reales si ya lo tienes en GitHub):
+Abre una terminal y clona el proyecto en tu máquina desde GitHub:
 
 ```bash
-git clone https://github.com/TU_USUARIO/sgsi-backend.git
-cd sgsi-backend
+git clone https://github.com/DeyaneiraRuiz/san-martin-activos.git
+cd san-martin-activos
 ```
 
 ### 1. Requisitos del Entorno
+
 Para ejecutar este backend en tu fase de desarrollo se requiere:
 
 1. **Java 17** o superior instalado y configurado en tus Variables de Entorno (`java -version`).
