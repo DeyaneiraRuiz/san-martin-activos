@@ -8,10 +8,10 @@
 		<version>3.5.11</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.cooperativasanmartinrl</groupId>
-	<artifactId>activos</artifactId>
+	<groupId>com.sgsi</groupId>
+	<artifactId>sgsi-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
+	<name>sgsi-backend</name>
 	<description/>
 	<url/>
 	<licenses>
