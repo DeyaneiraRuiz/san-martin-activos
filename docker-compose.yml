@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: sgsi-db
+    environment:
+      POSTGRES_DB: activos_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: always
+
+  backend:
+    build: .
+    container_name: sgsi-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_URL=jdbc:postgresql://db:5432/activos_db
+      - DB_USER=postgres
+      - DB_PASSWORD=123456
+      - JWT_SECRET=unaSuperClaveSecretaJWTQueTieneQueSerLargaPorMotivosDeSeguridad2024
+      - JWT_EXPIRATION=86400000
+    depends_on:
+      - db
+    restart: always
+
+volumes:
+  db_data:

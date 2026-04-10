@@ -1,0 +1,109 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.sgsi:sgsi-backend >------------------------
+[INFO] Building sgsi-backend 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ sgsi-backend ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ sgsi-backend ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 159 source files with javac [debug parameters release 17] to target\classes
+[INFO] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/security/config/WebSecurityConfig.java: D:\Universidad\9 SEMESTRE\Internado rotatorio 1-26\SIS PROYECT\activos\activos\src\main\java\com\sgsi\security\config\WebSecurityConfig.java uses or overrides a deprecated API.
+[INFO] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/security/config/WebSecurityConfig.java: Recompile with -Xlint:deprecation for details.
+[INFO] -------------------------------------------------------------
+[WARNING] COMPILATION WARNING : 
+[INFO] -------------------------------------------------------------
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[10,33] Unmapped target property: "descripcion".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[11,21] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[13,31] Unmapped target property: "descripcion".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[14,19] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[16,30] Unmapped target property: "descripcion".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[17,18] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[20,26] Unmapped target property: "descripcion".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[22,14] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[24,36] Unmapped target property: "descripcion".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[25,24] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[27,31] Unmapped target property: "descripcion".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[28,19] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[30,32] Unmapped target property: "descripcion".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[31,20] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[33,33] Unmapped target property: "dias".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[34,21] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[36,40] Unmapped target property: "descripcion".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/catalogos/mapper/CatalogosMapper.java:[37,28] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/auditoria/mapper/AuditoriaMapper.java:[12,27] Unmapped target properties: "tablaAfectada, valorAnterior, valorNuevo, ip, modulo, detalle, fechaAuditoria".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/auditoria/mapper/AuditoriaMapper.java:[15,15] Unmapped target properties: "id, tabla, datosAnteriores, datosNuevos, fecha".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/organizacion/mapper/OrganizacionMapper.java:[15,10] Unmapped target properties: "id, createdAt, updatedAt, createdBy, updatedBy".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/organizacion/mapper/OrganizacionMapper.java:[18,11] Unmapped target properties: "id, createdAt".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/organizacion/mapper/OrganizacionMapper.java:[21,29] Unmapped target properties: "apellido, cargo, telefono".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/organizacion/mapper/OrganizacionMapper.java:[24,17] Unmapped target properties: "id, activo, createdAt, updatedAt".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/riesgos/mapper/RiesgosMapper.java:[10,25] Unmapped target properties: "descripcion, tipo".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/riesgos/mapper/RiesgosMapper.java:[11,13] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/riesgos/mapper/RiesgosMapper.java:[13,32] Unmapped target properties: "descripcion, tipo".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/riesgos/mapper/RiesgosMapper.java:[14,20] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/riesgos/mapper/RiesgosMapper.java:[16,29] Unmapped target properties: "nivelMin, nivelMax, clasificacion, colorHex".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/riesgos/mapper/RiesgosMapper.java:[17,17] Unmapped target properties: "id, nombre, valorMin, valorMax, color".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/riesgos/mapper/RiesgosMapper.java:[25,12] Unmapped target properties: "id, activos, procesos, createdAt, createdBy".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/riesgos/mapper/RiesgosMapper.java:[35,22] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/riesgos/mapper/RiesgosMapper.java:[43,23] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/activos/mapper/ActivoMapper.java:[21,12] Unmapped target properties: "id, codigo, valorActivo, fechaBaja, createdAt, updatedAt, createdBy, updatedBy, deletedAt".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/procesos/mapper/ProcesosMapper.java:[16,13] Unmapped target properties: "id, createdAt, updatedAt, createdBy, updatedBy".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/procesos/mapper/ProcesosMapper.java:[19,13] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/procesos/mapper/ProcesosMapper.java:[22,15] Unmapped target properties: "id, createdAt, createdBy".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/procesos/mapper/ProcesosMapper.java:[26,31] Unmapped target property: "justificacion".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/procesos/mapper/ProcesosMapper.java:[29,19] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/procesos/mapper/ProcesosMapper.java:[33,32] Unmapped target properties: "estadoImplementacion, fechaRevision".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/procesos/mapper/ProcesosMapper.java:[36,20] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/procesos/mapper/ProcesosMapper.java:[40,34] Unmapped target property: "esObligatorio".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/procesos/mapper/ProcesosMapper.java:[43,22] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/security/mapper/SecurityMapper.java:[13,9] Unmapped target properties: "id, createdAt, updatedAt".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/security/mapper/SecurityMapper.java:[19,13] Unmapped target properties: "id, passwordHash, nombreCompleto, ultimoLogin, passwordChangedAt, intentosFallidos, bloqueadoHasta, twofaEnabled, createdAt, updatedAt, createdBy, updatedBy".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/incidentes/mapper/IncidentesMapper.java:[10,21] Unmapped target properties: "nivel, tiempoRespuestaHoras, tiempoResolucionHoras, descripcion".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/incidentes/mapper/IncidentesMapper.java:[11,9] Unmapped target properties: "id, nombre, tiempoRespuesta, tiempoResolucion".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/incidentes/mapper/IncidentesMapper.java:[15,36] Unmapped target property: "descripcion".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/incidentes/mapper/IncidentesMapper.java:[19,24] Unmapped target property: "id".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/incidentes/mapper/IncidentesMapper.java:[26,27] Unmapped target properties: "fechaIncidente, fechaEstimadaResolucion, fechaRealResolucion, notasResolucion".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/incidentes/mapper/IncidentesMapper.java:[33,15] Unmapped target properties: "id, impacto, urgencia, prioridad, sla, fechaReporte, fechaCierre, slaVencimiento, activos, observadores, riesgosAsociados, createdAt, updatedAt, createdBy, updatedBy".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/incidentes/mapper/IncidentesMapper.java:[37,36] Unmapped target properties: "rutaArchivo, tamañoBytes, descripcion, fechaSubida".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/incidentes/mapper/IncidentesMapper.java:[41,24] Unmapped target properties: "id, archivoUrl, tamaño, createdAt".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/incidentes/mapper/IncidentesMapper.java:[45,36] Unmapped target properties: "accion, estadoAnteriorNombre, estadoNuevoNombre, notas, fechaModificacion".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/incidentes/mapper/IncidentesMapper.java:[49,24] Unmapped target properties: "id, estado, comentario, fecha".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/incidentes/mapper/IncidentesMapper.java:[54,34] Unmapped target property: "comentarios".
+[WARNING] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/incidentes/mapper/IncidentesMapper.java:[59,22] Unmapped target property: "id".
+[INFO] 57 warnings 
+[INFO] -------------------------------------------------------------
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/security/controller/AuthController.java:[68,13] cannot find symbol
+  symbol:   method setRolId(int)
+  location: variable user of type com.sgsi.security.entity.Usuario
+[ERROR] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/security/jwt/UserDetailsImpl.java:[33,58] cannot find symbol
+  symbol:   method getRolId()
+  location: variable user of type com.sgsi.security.entity.Usuario
+[INFO] 2 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.972 s
+[INFO] Finished at: 2026-04-08T15:50:08-04:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.14.1:compile (default-compile) on project sgsi-backend: Compilation failure: Compilation failure: 
+[ERROR] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/security/controller/AuthController.java:[68,13] cannot find symbol
+[ERROR]   symbol:   method setRolId(int)
+[ERROR]   location: variable user of type com.sgsi.security.entity.Usuario
+[ERROR] /D:/Universidad/9 SEMESTRE/Internado rotatorio 1-26/SIS PROYECT/activos/activos/src/main/java/com/sgsi/security/jwt/UserDetailsImpl.java:[33,58] cannot find symbol
+[ERROR]   symbol:   method getRolId()
+[ERROR]   location: variable user of type com.sgsi.security.entity.Usuario
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
