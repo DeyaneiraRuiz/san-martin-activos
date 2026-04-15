@@ -44,7 +44,7 @@ public class AuthController {
         response.put("id", userDetails.getId());
         response.put("username", userDetails.getUsername());
         response.put("email", userDetails.getEmail());
-        
+
         return ResponseEntity.ok(response);
     }
 
