@@ -29,7 +29,7 @@ public class AuthController {
     private final JwtUtils jwtUtils;
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody UsuarioDto.Request loginRequest) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody UsuarioDto.LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password()));

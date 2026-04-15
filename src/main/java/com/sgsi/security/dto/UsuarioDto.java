@@ -18,6 +18,11 @@ public interface UsuarioDto {
                         @NotNull(message = "El rol es obligatorio") Integer rolId) {
         }
 
+        record LoginRequest(
+                        @NotBlank(message = "El username es obligatorio") String username,
+                        @NotBlank(message = "La contraseña es obligatoria") String password) {
+        }
+
         record Response(
                         Integer id,
                         String username,

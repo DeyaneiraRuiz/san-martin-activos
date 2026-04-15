@@ -26,8 +26,13 @@ public class DatabaseSeeder implements CommandLineRunner {
             user.setDescripcion("Usuario Standard");
 
             rolRepository.saveAll(Arrays.asList(admin, user));
-            
-            System.out.println("✅ Datos Iniciales Sembrados (Roles) en la Base de Datos");
+
+            System.out.println("Datos Iniciales Sembrados (Roles) en la Base de Datos");
         }
+
+        System.out.println("Roles disponibles en el sistema:");
+        rolRepository.findAll().forEach(r -> {
+            System.out.println(r.getNombre() + " | ID para Postman: " + r.getId());
+        });
     }
 }
