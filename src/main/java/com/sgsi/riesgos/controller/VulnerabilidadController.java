@@ -1,9 +1,9 @@
-package com.sgsi.incidentes.controller;
+package com.sgsi.riesgos.controller;
 
-import com.sgsi.incidentes.dto.IncidenteDto;
-import com.sgsi.incidentes.entity.Incidente;
-import com.sgsi.incidentes.mapper.IncidentesMapper;
-import com.sgsi.incidentes.service.IncidenteService;
+import com.sgsi.riesgos.dto.VulnerabilidadDto;
+import com.sgsi.riesgos.entity.Vulnerabilidad;
+import com.sgsi.riesgos.mapper.RiesgosMapper;
+import com.sgsi.riesgos.service.VulnerabilidadService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,33 +14,33 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/incidentes")
+@RequestMapping("/api/vulnerabilidades")
 @RequiredArgsConstructor
-public class IncidenteController {
+public class VulnerabilidadController {
 
-    private final IncidenteService service;
-    private final IncidentesMapper mapper;
+    private final VulnerabilidadService service;
+    private final RiesgosMapper mapper;
 
     @GetMapping
-    public ResponseEntity<List<IncidenteDto.Response>> findAll() {
+    public ResponseEntity<List<VulnerabilidadDto.Response>> findAll() {
         return ResponseEntity.ok(service.findAll().stream()
                 .map(mapper::toResponse).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<IncidenteDto.Response> findById(@PathVariable Integer id) {
+    public ResponseEntity<VulnerabilidadDto.Response> findById(@PathVariable Integer id) {
         return service.findById(id).map(mapper::toResponse)
                 .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<IncidenteDto.Response> create(@Valid @RequestBody IncidenteDto.Request request) {
-        Incidente saved = service.save(mapper.toEntity(request));
+    public ResponseEntity<VulnerabilidadDto.Response> create(@Valid @RequestBody VulnerabilidadDto.Request request) {
+        Vulnerabilidad saved = service.save(mapper.toEntity(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(saved));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<IncidenteDto.Response> update(@PathVariable Integer id, @Valid @RequestBody IncidenteDto.Request request) {
+    public ResponseEntity<VulnerabilidadDto.Response> update(@PathVariable Integer id, @Valid @RequestBody VulnerabilidadDto.Request request) {
         return service.findById(id).map(existing -> {
             mapper.updateEntityFromRequest(request, existing);
             return ResponseEntity.ok(mapper.toResponse(service.save(existing)));

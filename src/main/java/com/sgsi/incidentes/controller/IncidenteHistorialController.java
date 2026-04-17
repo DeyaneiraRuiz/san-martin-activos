@@ -1,9 +1,9 @@
 package com.sgsi.incidentes.controller;
 
-import com.sgsi.incidentes.dto.IncidenteDto;
-import com.sgsi.incidentes.entity.Incidente;
+import com.sgsi.incidentes.dto.IncidenteHistorialDto;
+import com.sgsi.incidentes.entity.IncidenteHistorial;
 import com.sgsi.incidentes.mapper.IncidentesMapper;
-import com.sgsi.incidentes.service.IncidenteService;
+import com.sgsi.incidentes.service.IncidenteHistorialService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,33 +14,33 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/incidentes")
+@RequestMapping("/api/incidente-historiales")
 @RequiredArgsConstructor
-public class IncidenteController {
+public class IncidenteHistorialController {
 
-    private final IncidenteService service;
+    private final IncidenteHistorialService service;
     private final IncidentesMapper mapper;
 
     @GetMapping
-    public ResponseEntity<List<IncidenteDto.Response>> findAll() {
+    public ResponseEntity<List<IncidenteHistorialDto.Response>> findAll() {
         return ResponseEntity.ok(service.findAll().stream()
                 .map(mapper::toResponse).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<IncidenteDto.Response> findById(@PathVariable Integer id) {
+    public ResponseEntity<IncidenteHistorialDto.Response> findById(@PathVariable Integer id) {
         return service.findById(id).map(mapper::toResponse)
                 .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<IncidenteDto.Response> create(@Valid @RequestBody IncidenteDto.Request request) {
-        Incidente saved = service.save(mapper.toEntity(request));
+    public ResponseEntity<IncidenteHistorialDto.Response> create(@Valid @RequestBody IncidenteHistorialDto.Request request) {
+        IncidenteHistorial saved = service.save(mapper.toEntity(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(saved));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<IncidenteDto.Response> update(@PathVariable Integer id, @Valid @RequestBody IncidenteDto.Request request) {
+    public ResponseEntity<IncidenteHistorialDto.Response> update(@PathVariable Integer id, @Valid @RequestBody IncidenteHistorialDto.Request request) {
         return service.findById(id).map(existing -> {
             mapper.updateEntityFromRequest(request, existing);
             return ResponseEntity.ok(mapper.toResponse(service.save(existing)));

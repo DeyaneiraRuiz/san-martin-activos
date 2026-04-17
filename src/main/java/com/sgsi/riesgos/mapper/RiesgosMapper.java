@@ -4,6 +4,7 @@ import com.sgsi.riesgos.dto.*;
 import com.sgsi.riesgos.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface RiesgosMapper {
@@ -41,4 +42,22 @@ public interface RiesgosMapper {
     @Mapping(source = "riesgoId", target = "riesgo.id")
     @Mapping(source = "responsableId", target = "responsable.id")
     TratamientoRiesgo toEntity(TratamientoRiesgoDto.Request request);
+    void updateEntityFromRequest(AmenazaDto.Request request, @MappingTarget Amenaza entity);
+
+    void updateEntityFromRequest(VulnerabilidadDto.Request request, @MappingTarget Vulnerabilidad entity);
+
+    void updateEntityFromRequest(NivelRiesgoDto.Request request, @MappingTarget NivelRiesgo entity);
+
+    @Mapping(source = "amenazaId", target = "amenaza.id")
+    @Mapping(source = "vulnerabilidadId", target = "vulnerabilidad.id")
+    void updateEntityFromRequest(RiesgoDto.Request request, @MappingTarget Riesgo entity);
+
+    @Mapping(source = "riesgoId", target = "riesgo.id")
+    @Mapping(source = "nivelRiesgoId", target = "nivelRiesgo.id")
+    @Mapping(source = "evaluadoPorId", target = "evaluadoPor.id")
+    void updateEntityFromRequest(EvaluacionRiesgoDto.Request request, @MappingTarget EvaluacionRiesgo entity);
+
+    @Mapping(source = "riesgoId", target = "riesgo.id")
+    @Mapping(source = "responsableId", target = "responsable.id")
+    void updateEntityFromRequest(TratamientoRiesgoDto.Request request, @MappingTarget TratamientoRiesgo entity);
 }
