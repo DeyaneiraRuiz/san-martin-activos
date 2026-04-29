@@ -9,7 +9,7 @@ import com.sgsi.organizacion.entity.Propietario;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE)
 public interface OrganizacionMapper {
     AreaDto.Response toResponse(Area entity);
     Area toEntity(AreaDto.Request request);

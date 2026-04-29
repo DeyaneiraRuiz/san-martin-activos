@@ -7,7 +7,7 @@ import com.sgsi.security.entity.Usuario;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE)
 public interface SecurityMapper {
     RolDto.Response toResponse(Rol entity);
     Rol toEntity(RolDto.Request request);

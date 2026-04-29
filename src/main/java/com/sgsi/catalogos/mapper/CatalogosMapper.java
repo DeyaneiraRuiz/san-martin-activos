@@ -5,7 +5,7 @@ import com.sgsi.catalogos.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE)
 public interface CatalogosMapper {
     CatEstadoActivoDto.Response toResponse(CatEstadoActivo entity);
     CatEstadoActivo toEntity(CatEstadoActivoDto.Request request);
