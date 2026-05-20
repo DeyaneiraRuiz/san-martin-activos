@@ -44,6 +44,12 @@ public class AuthController {
             response.put("id", userDetails.getId());
             response.put("username", userDetails.getUsername());
             response.put("email", userDetails.getEmail());
+            
+            String role = userDetails.getAuthorities().stream()
+                    .findFirst()
+                    .map(item -> item.getAuthority())
+                    .orElse("ROLE_USER");
+            response.put("role", role);
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {

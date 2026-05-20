@@ -25,7 +25,7 @@ public class Usuario {
     @Column(name = "nombre_completo", length = 150)
     private String nombreCompleto;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rol_id")
     private Rol rol;
 
