@@ -8,11 +8,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@PreAuthorize("hasAnyRole('ADMINISTRADOR', 'ANALISTA_SEGURIDAD')")
 @RestController
 @RequestMapping("/api/controles")
 @RequiredArgsConstructor
@@ -47,6 +49,7 @@ public class ControlController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         if (service.findById(id).isPresent()) {

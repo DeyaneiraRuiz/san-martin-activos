@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,24 +22,28 @@ public class ProcesoController {
     private final ProcesoService service;
     private final ProcesosMapper mapper;
 
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'RESPONSABLE_AREA')")
     @GetMapping
     public ResponseEntity<List<ProcesoDto.Response>> findAll() {
         return ResponseEntity.ok(service.findAll().stream()
                 .map(mapper::toResponse).collect(Collectors.toList()));
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'RESPONSABLE_AREA')")
     @GetMapping("/{id}")
     public ResponseEntity<ProcesoDto.Response> findById(@PathVariable Integer id) {
         return service.findById(id).map(mapper::toResponse)
                 .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'RESPONSABLE_AREA')")
     @PostMapping
     public ResponseEntity<ProcesoDto.Response> create(@Valid @RequestBody ProcesoDto.Request request) {
         Proceso saved = service.save(mapper.toEntity(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(saved));
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'RESPONSABLE_AREA')")
     @PutMapping("/{id}")
     public ResponseEntity<ProcesoDto.Response> update(@PathVariable Integer id, @Valid @RequestBody ProcesoDto.Request request) {
         return service.findById(id).map(existing -> {
@@ -47,6 +52,7 @@ public class ProcesoController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         if (service.findById(id).isPresent()) {

@@ -21,71 +21,51 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (!rolRepository.findByNombre("ROLE_ADMIN").isPresent()) {
-            Rol admin = new Rol();
-            admin.setNombre("ROLE_ADMIN");
-            admin.setDescripcion("Administrador del Sistema");
-            rolRepository.save(admin);
-        }
+        // Sembrar 6 Roles
+        String[] roleNames = {
+                "ROLE_ADMINISTRADOR", "ROLE_RESPONSABLE_AREA",
+                "ROLE_ANALISTA_SEGURIDAD", "ROLE_TECNICO",
+                "ROLE_USUARIO", "ROLE_OBSERVADOR"
+        };
 
-        if (!rolRepository.findByNombre("ROLE_AUDITOR").isPresent()) {
-            Rol auditor = new Rol();
-            auditor.setNombre("ROLE_AUDITOR");
-            auditor.setDescripcion("Auditor del Sistema");
-            rolRepository.save(auditor);
+        for (String roleName : roleNames) {
+            if (!rolRepository.findByNombre(roleName).isPresent()) {
+                Rol rol = new Rol();
+                rol.setNombre(roleName);
+                rol.setDescripcion("Rol " + roleName.replace("ROLE_", ""));
+                rolRepository.save(rol);
+            }
         }
-
-        if (!rolRepository.findByNombre("ROLE_OBSERVADOR").isPresent()) {
-            Rol observador = new Rol();
-            observador.setNombre("ROLE_OBSERVADOR");
-            observador.setDescripcion("Observador del Sistema");
-            rolRepository.save(observador);
-        }
-
         System.out.println("Roles verificados/sembrados en la Base de Datos");
 
-        Rol adminRol = rolRepository.findByNombre("ROLE_ADMIN").orElse(null);
-        Rol auditorRol = rolRepository.findByNombre("ROLE_AUDITOR").orElse(null);
-        Rol obsRol = rolRepository.findByNombre("ROLE_OBSERVADOR").orElse(null);
+        // Sembrar Usuarios
+        crearUsuarioSiNoExiste("admin", "admin@sgsi.com", "admin1", "Administrador del Sistema", "ROLE_ADMINISTRADOR");
+        crearUsuarioSiNoExiste("responsable", "responsable@sgsi.com", "responsable", "Responsable de Área",
+                "ROLE_RESPONSABLE_AREA");
+        crearUsuarioSiNoExiste("analista", "analista@sgsi.com", "analista", "Analista de Seguridad",
+                "ROLE_ANALISTA_SEGURIDAD");
+        crearUsuarioSiNoExiste("tecnico", "tecnico@sgsi.com", "tecnico", "Técnico", "ROLE_TECNICO");
+        crearUsuarioSiNoExiste("usuario", "usuario@sgsi.com", "usuario", "Usuario Standard", "ROLE_USUARIO");
+        crearUsuarioSiNoExiste("observador", "observador@sgsi.com", "observador1", "Observador del Sistema",
+                "ROLE_OBSERVADOR");
 
-        if (adminRol != null && !usuarioRepository.findByUsername("admin").isPresent()) {
-            Usuario adminUser = new Usuario();
-            adminUser.setUsername("admin");
-            adminUser.setEmail("admin@sgsi.com");
-            adminUser.setPasswordHash(passwordEncoder.encode("admin1"));
-            adminUser.setActivo(true);
-            adminUser.setRol(adminRol);
-            adminUser.setNombreCompleto("Administrador del Sistema");
-            usuarioRepository.save(adminUser);
+        System.out.println("Usuarios iniciales verificados/sembrados");
+    }
+
+    private void crearUsuarioSiNoExiste(String username, String email, String password, String fullName,
+            String roleName) {
+        if (!usuarioRepository.findByUsername(username).isPresent()) {
+            Rol rol = rolRepository.findByNombre(roleName).orElse(null);
+            if (rol != null) {
+                Usuario user = new Usuario();
+                user.setUsername(username);
+                user.setEmail(email);
+                user.setPasswordHash(passwordEncoder.encode(password));
+                user.setActivo(true);
+                user.setRol(rol);
+                user.setNombreCompleto(fullName);
+                usuarioRepository.save(user);
+            }
         }
-
-        if (auditorRol != null && !usuarioRepository.findByUsername("auditor").isPresent()) {
-            Usuario auditorUser = new Usuario();
-            auditorUser.setUsername("auditor");
-            auditorUser.setEmail("auditor@sgsi.com");
-            auditorUser.setPasswordHash(passwordEncoder.encode("auditor1"));
-            auditorUser.setActivo(true);
-            auditorUser.setRol(auditorRol);
-            auditorUser.setNombreCompleto("Auditor del Sistema");
-            usuarioRepository.save(auditorUser);
-        }
-
-        if (obsRol != null && !usuarioRepository.findByUsername("observador").isPresent()) {
-            Usuario obsUser = new Usuario();
-            obsUser.setUsername("observador");
-            obsUser.setEmail("observador@sgsi.com");
-            obsUser.setPasswordHash(passwordEncoder.encode("observador1"));
-            obsUser.setActivo(true);
-            obsUser.setRol(obsRol);
-            obsUser.setNombreCompleto("Observador del Sistema");
-            usuarioRepository.save(obsUser);
-        }
-
-        System.out.println("Usuarios iniciales verificados/sembrados (admin, auditor, observador)");
-
-        System.out.println("Roles disponibles en el sistema:");
-        rolRepository.findAll().forEach(r -> {
-            System.out.println(r.getNombre() + " | ID para Postman: " + r.getId());
-        });
     }
 }

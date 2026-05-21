@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class ActivoController {
     private final ActivoService service;
     private final ActivoMapper mapper;
 
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'RESPONSABLE_AREA', 'ANALISTA_SEGURIDAD')")
     @GetMapping
     public ResponseEntity<List<ActivoDto.Response>> findAll() {
         List<ActivoDto.Response> responses = service.findAll().stream()
@@ -29,6 +31,7 @@ public class ActivoController {
         return ResponseEntity.ok(responses);
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'RESPONSABLE_AREA', 'ANALISTA_SEGURIDAD')")
     @GetMapping("/{id}")
     public ResponseEntity<ActivoDto.Response> findById(@PathVariable Integer id) {
         return service.findById(id)
@@ -37,6 +40,7 @@ public class ActivoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'RESPONSABLE_AREA')")
     @PostMapping
     public ResponseEntity<ActivoDto.Response> create(@Valid @RequestBody ActivoDto.Request request) {
         Activo entity = mapper.toEntity(request);
@@ -44,6 +48,7 @@ public class ActivoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(savedEntity));
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'RESPONSABLE_AREA')")
     @PutMapping("/{id}")
     public ResponseEntity<ActivoDto.Response> update(@PathVariable Integer id, @Valid @RequestBody ActivoDto.Request request) {
         return service.findById(id).map(existing -> {
@@ -53,6 +58,7 @@ public class ActivoController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         if (service.findById(id).isPresent()) {
