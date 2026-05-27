@@ -29,6 +29,17 @@ public class DatabaseSeeder implements CommandLineRunner {
         };
 
         for (String roleName : roleNames) {
+            // Migrar roles viejos sin prefijo ROLE_ al formato nuevo
+            String oldName = roleName.replace("ROLE_", "");
+            java.util.Optional<Rol> oldRol = rolRepository.findByNombre(oldName);
+            if (oldRol.isPresent()) {
+                Rol rol = oldRol.get();
+                rol.setNombre(roleName);
+                rol.setDescripcion("Rol " + oldName);
+                rolRepository.save(rol);
+                System.out.println("Rol migrado: " + oldName + " -> " + roleName);
+            }
+
             if (!rolRepository.findByNombre(roleName).isPresent()) {
                 Rol rol = new Rol();
                 rol.setNombre(roleName);
@@ -54,18 +65,27 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private void crearUsuarioSiNoExiste(String username, String email, String password, String fullName,
             String roleName) {
-        if (!usuarioRepository.findByUsername(username).isPresent()) {
-            Rol rol = rolRepository.findByNombre(roleName).orElse(null);
-            if (rol != null) {
-                Usuario user = new Usuario();
-                user.setUsername(username);
-                user.setEmail(email);
-                user.setPasswordHash(passwordEncoder.encode(password));
-                user.setActivo(true);
+        Rol rol = rolRepository.findByNombre(roleName).orElse(null);
+        if (rol == null) return;
+
+        java.util.Optional<Usuario> existingUser = usuarioRepository.findByUsername(username);
+        if (existingUser.isPresent()) {
+            // Corregir rol si no coincide con el esperado
+            Usuario user = existingUser.get();
+            if (user.getRol() == null || !roleName.equals(user.getRol().getNombre())) {
                 user.setRol(rol);
-                user.setNombreCompleto(fullName);
                 usuarioRepository.save(user);
+                System.out.println("Usuario '" + username + "' actualizado con rol: " + roleName);
             }
+        } else {
+            Usuario user = new Usuario();
+            user.setUsername(username);
+            user.setEmail(email);
+            user.setPasswordHash(passwordEncoder.encode(password));
+            user.setActivo(true);
+            user.setRol(rol);
+            user.setNombreCompleto(fullName);
+            usuarioRepository.save(user);
         }
     }
 }

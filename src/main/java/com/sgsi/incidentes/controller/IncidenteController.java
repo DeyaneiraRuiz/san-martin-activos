@@ -22,7 +22,7 @@ public class IncidenteController {
     private final IncidenteService service;
     private final IncidentesMapper mapper;
 
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'TECNICO', 'ANALISTA_SEGURIDAD', 'USUARIO')")
     @GetMapping
     public ResponseEntity<List<IncidenteDto.Response>> findAll() {
         return ResponseEntity.ok(service.findAll().stream()

@@ -25,6 +25,10 @@ public class UserDetailsImpl implements UserDetails {
 
     public static UserDetailsImpl build(Usuario user) {
         String roleName = user.getRol() != null ? user.getRol().getNombre() : "ROLE_USER";
+        // Asegurar que siempre tenga el prefijo ROLE_ para compatibilidad con hasRole()
+        if (!roleName.startsWith("ROLE_")) {
+            roleName = "ROLE_" + roleName;
+        }
         List<GrantedAuthority> authorities = Collections.singletonList(
                 new SimpleGrantedAuthority(roleName)
         );
