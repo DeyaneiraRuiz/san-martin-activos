@@ -2,31 +2,26 @@ package com.sgsi.core;
 
 import com.sgsi.catalogos.entity.*;
 import com.sgsi.catalogos.repository.*;
+import com.sgsi.incidentes.entity.CategoriaIncidente;
+import com.sgsi.incidentes.repository.CategoriaIncidenteRepository;
 import com.sgsi.organizacion.entity.Area;
 import com.sgsi.organizacion.repository.AreaRepository;
 import com.sgsi.riesgos.entity.Amenaza;
 import com.sgsi.riesgos.entity.Vulnerabilidad;
 import com.sgsi.riesgos.repository.AmenazaRepository;
 import com.sgsi.riesgos.repository.VulnerabilidadRepository;
-import com.sgsi.security.entity.Rol;
-import com.sgsi.security.entity.Usuario;
-import com.sgsi.security.repository.RolRepository;
-import com.sgsi.security.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-@Order(1)
+@Order(2)
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
 
-    private final RolRepository rolRepository;
-    private final UsuarioRepository usuarioRepository;
     private final CatTipoActivoRepository catTipoActivoRepository;
     private final CatEstadoActivoRepository catEstadoActivoRepository;
     private final CatEstadoIncidenteRepository catEstadoIncidenteRepository;
@@ -36,12 +31,10 @@ public class DataInitializer implements CommandLineRunner {
     private final AmenazaRepository amenazaRepository;
     private final VulnerabilidadRepository vulnerabilidadRepository;
     private final AreaRepository areaRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final CategoriaIncidenteRepository categoriaIncidenteRepository;
 
     @Override
     public void run(String... args) {
-        seedRoles();
-        seedAdminUser();
         seedCatTiposActivo();
         seedCatEstadosActivo();
         seedCatEstadosIncidente();
@@ -51,38 +44,7 @@ public class DataInitializer implements CommandLineRunner {
         seedAmenazas();
         seedVulnerabilidades();
         seedAreasPorDefecto();
-    }
-
-    private void seedRoles() {
-        List<String[]> roles = List.of(
-            new String[]{"ADMINISTRADOR", "Administrador del sistema con acceso total"},
-            new String[]{"RESPONSABLE_AREA", "Responsable de área con acceso a gestión de activos"},
-            new String[]{"ANALISTA_SEGURIDAD", "Analista de seguridad con acceso a riesgos e incidentes"},
-            new String[]{"TECNICO", "Técnico con acceso a gestión de incidentes"},
-            new String[]{"USUARIO", "Usuario básico con acceso de lectura"}
-        );
-        for (String[] r : roles) {
-            if (rolRepository.findByNombre(r[0]).isEmpty()) {
-                Rol rol = new Rol();
-                rol.setNombre(r[0]);
-                rol.setDescripcion(r[1]);
-                rolRepository.save(rol);
-            }
-        }
-    }
-
-    private void seedAdminUser() {
-        if (!usuarioRepository.existsByUsername("admin")) {
-            Rol rolAdmin = rolRepository.findByNombre("ADMINISTRADOR").orElseThrow();
-            Usuario admin = new Usuario();
-            admin.setUsername("admin");
-            admin.setEmail("admin@sgsi.local");
-            admin.setNombreCompleto("Administrador del Sistema");
-            admin.setPasswordHash(passwordEncoder.encode("Admin1234!"));
-            admin.setRol(rolAdmin);
-            admin.setActivo(true);
-            usuarioRepository.save(admin);
-        }
+        seedCategoriasIncidente();
     }
 
     private void seedCatTiposActivo() {
@@ -90,7 +52,7 @@ public class DataInitializer implements CommandLineRunner {
             "Hardware", "Software", "Servicios", "Datos", "Personas", "Instalaciones", "Redes"
         );
         for (String nombre : tipos) {
-            if (catTipoActivoRepository.findAll().stream().noneMatch(e -> e.getNombre().equals(nombre))) {
+            if (catTipoActivoRepository.findAll().stream().noneMatch(e -> nombre.equals(e.getNombre()))) {
                 CatTipoActivo e = new CatTipoActivo();
                 e.setNombre(nombre);
                 catTipoActivoRepository.save(e);
@@ -101,7 +63,7 @@ public class DataInitializer implements CommandLineRunner {
     private void seedCatEstadosActivo() {
         List<String> estados = List.of("Activo", "Inactivo", "En mantenimiento", "Dado de baja");
         for (String nombre : estados) {
-            if (catEstadoActivoRepository.findAll().stream().noneMatch(e -> e.getNombre().equals(nombre))) {
+            if (catEstadoActivoRepository.findAll().stream().noneMatch(e -> nombre.equals(e.getNombre()))) {
                 CatEstadoActivo e = new CatEstadoActivo();
                 e.setNombre(nombre);
                 catEstadoActivoRepository.save(e);
@@ -112,7 +74,7 @@ public class DataInitializer implements CommandLineRunner {
     private void seedCatEstadosIncidente() {
         List<String> estados = List.of("Abierto", "En proceso", "Resuelto", "Cerrado", "Cancelado");
         for (String nombre : estados) {
-            if (catEstadoIncidenteRepository.findAll().stream().noneMatch(e -> e.getNombre().equals(nombre))) {
+            if (catEstadoIncidenteRepository.findAll().stream().noneMatch(e -> nombre.equals(e.getNombre()))) {
                 CatEstadoIncidente e = new CatEstadoIncidente();
                 e.setNombre(nombre);
                 catEstadoIncidenteRepository.save(e);
@@ -123,7 +85,7 @@ public class DataInitializer implements CommandLineRunner {
     private void seedCatTiposTicket() {
         List<String> tipos = List.of("Incidente", "Solicitud de servicio", "Cambio", "Problema");
         for (String nombre : tipos) {
-            if (catTipoTicketRepository.findAll().stream().noneMatch(e -> e.getNombre().equals(nombre))) {
+            if (catTipoTicketRepository.findAll().stream().noneMatch(e -> nombre.equals(e.getNombre()))) {
                 CatTipoTicket e = new CatTipoTicket();
                 e.setNombre(nombre);
                 catTipoTicketRepository.save(e);
@@ -142,7 +104,7 @@ public class DataInitializer implements CommandLineRunner {
         );
         for (Object[] p : periodicidades) {
             String nombre = (String) p[0];
-            if (catPeriodicidadRepository.findAll().stream().noneMatch(e -> e.getNombre().equals(nombre))) {
+            if (catPeriodicidadRepository.findAll().stream().noneMatch(e -> nombre.equals(e.getNombre()))) {
                 CatPeriodicidad e = new CatPeriodicidad();
                 e.setNombre(nombre);
                 e.setDias((Integer) p[1]);
@@ -154,7 +116,7 @@ public class DataInitializer implements CommandLineRunner {
     private void seedCatNivelesAutomatizacion() {
         List<String> niveles = List.of("Manual", "Semi-automatizado", "Automatizado");
         for (String nombre : niveles) {
-            if (catNivelAutomatizacionRepository.findAll().stream().noneMatch(e -> e.getNombre().equals(nombre))) {
+            if (catNivelAutomatizacionRepository.findAll().stream().noneMatch(e -> nombre.equals(e.getNombre()))) {
                 CatNivelAutomatizacion e = new CatNivelAutomatizacion();
                 e.setNombre(nombre);
                 catNivelAutomatizacionRepository.save(e);
@@ -171,11 +133,11 @@ public class DataInitializer implements CommandLineRunner {
             new Object[]{"Error humano", "Errores cometidos por personal interno", "Humana"},
             new Object[]{"Desastre natural", "Terremotos, inundaciones u otros eventos naturales", "Física"},
             new Object[]{"Fallo de hardware", "Fallo de equipos físicos", "Física"},
-            new Object[]{"Denegación de servicio (DoS)", "Saturación de recursos para inhabilitar servicios", "Cibernética"}
+            new Object[]{"Denegación de servicio", "Saturación de recursos para inhabilitar servicios", "Cibernética"}
         );
         for (Object[] a : amenazas) {
             String nombre = (String) a[0];
-            if (amenazaRepository.findAll().stream().noneMatch(e -> e.getNombre().equals(nombre))) {
+            if (amenazaRepository.findAll().stream().noneMatch(e -> nombre.equals(e.getNombre()))) {
                 Amenaza e = new Amenaza();
                 e.setNombre(nombre);
                 e.setDescripcion((String) a[1]);
@@ -197,7 +159,7 @@ public class DataInitializer implements CommandLineRunner {
         );
         for (Object[] v : vulnerabilidades) {
             String nombre = (String) v[0];
-            if (vulnerabilidadRepository.findAll().stream().noneMatch(e -> e.getNombre().equals(nombre))) {
+            if (vulnerabilidadRepository.findAll().stream().noneMatch(e -> nombre.equals(e.getNombre()))) {
                 Vulnerabilidad e = new Vulnerabilidad();
                 e.setNombre(nombre);
                 e.setDescripcion((String) v[1]);
@@ -213,10 +175,27 @@ public class DataInitializer implements CommandLineRunner {
             "Operaciones", "Seguridad Informática", "Gerencia General"
         );
         for (String nombre : areas) {
-            if (areaRepository.findAll().stream().noneMatch(e -> e.getNombre().equals(nombre))) {
+            if (areaRepository.findAll().stream().noneMatch(e -> nombre.equals(e.getNombre()))) {
                 Area e = new Area();
                 e.setNombre(nombre);
                 areaRepository.save(e);
+            }
+        }
+    }
+
+    private void seedCategoriasIncidente() {
+        List<String> categorias = List.of(
+            "Incidentes de Seguridad de la Información",
+            "Vulnerabilidades",
+            "Acceso y Autenticación",
+            "Disponibilidad de Servicios",
+            "Incidentes Físicos"
+        );
+        for (String nombre : categorias) {
+            if (categoriaIncidenteRepository.findAll().stream().noneMatch(e -> nombre.equals(e.getNombre()))) {
+                CategoriaIncidente e = new CategoriaIncidente();
+                e.setNombre(nombre);
+                categoriaIncidenteRepository.save(e);
             }
         }
     }

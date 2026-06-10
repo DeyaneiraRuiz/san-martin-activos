@@ -43,6 +43,9 @@ public class Activo {
     private Integer integridad;
     private Integer disponibilidad;
 
+    @Column(name = "confidencialidad_almacenamiento")
+    private Integer confidencialidadAlmacenamiento;
+
     @Column(name = "valor_activo")
     private Integer valorActivo;
 

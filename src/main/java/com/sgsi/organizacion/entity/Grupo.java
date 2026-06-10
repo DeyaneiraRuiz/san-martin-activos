@@ -13,6 +13,9 @@ public class Grupo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(length = 30, unique = true)
+    private String codigo;
+
     @Column(length = 100, unique = true)
     private String nombre;
 

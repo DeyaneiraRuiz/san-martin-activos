@@ -15,8 +15,26 @@ public class Proceso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(length = 30)
+    private String codigo;
+
     @Column(length = 150)
     private String nombre;
+
+    @Column(length = 50)
+    private String tipo;
+
+    @Column(length = 50)
+    private String categoria;
+
+    @Column(columnDefinition = "TEXT")
+    private String descripcion;
+
+    @Column(length = 50)
+    private String impacto;
+
+    @Column(length = 30)
+    private String estado = "activo";
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "periodicidad_id")

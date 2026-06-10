@@ -25,6 +25,10 @@ public class ProcesoService {
     }
 
     public Proceso save(@NonNull Proceso entity) {
+        if (entity.getCodigo() == null || entity.getCodigo().isBlank()) {
+            long count = repository.count();
+            entity.setCodigo(String.format("P-%03d", count + 1));
+        }
         return repository.save(entity);
     }
 

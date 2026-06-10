@@ -25,6 +25,10 @@ public class ActivoService {
     }
 
     public Activo save(@NonNull Activo entity) {
+        if (entity.getCodigo() == null || entity.getCodigo().isBlank()) {
+            long count = repository.count();
+            entity.setCodigo(String.format("A-%03d", count + 1));
+        }
         return repository.save(entity);
     }
 

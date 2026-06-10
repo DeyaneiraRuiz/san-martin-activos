@@ -7,14 +7,25 @@ import java.time.LocalDateTime;
 public interface ProcesoDto {
     record Request(
             @NotBlank(message = "El nombre es obligatorio") String nombre,
-            @NotNull Integer periodicidadId,
-            @NotNull Integer nivelAutomatizacionId,
+            String tipo,
+            String categoria,
+            String descripcion,
+            String impacto,
+            String estado,
+            Integer periodicidadId,
+            Integer nivelAutomatizacionId,
             Boolean esCritico
     ) {}
 
     record Response(
             Integer id,
+            String codigo,
             String nombre,
+            String tipo,
+            String categoria,
+            String descripcion,
+            String impacto,
+            String estado,
             Integer periodicidadId,
             Integer nivelAutomatizacionId,
             Boolean esCritico,

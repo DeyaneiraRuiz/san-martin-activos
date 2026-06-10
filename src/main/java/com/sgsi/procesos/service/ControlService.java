@@ -25,6 +25,10 @@ public class ControlService {
     }
 
     public Control save(@NonNull Control entity) {
+        if (entity.getCodigo() == null || entity.getCodigo().isBlank()) {
+            long count = repository.count();
+            entity.setCodigo(String.format("CTRL-%03d", count + 1));
+        }
         return repository.save(entity);
     }
 

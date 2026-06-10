@@ -8,8 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -24,58 +24,32 @@ public class UserDetailsImpl implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
     public static UserDetailsImpl build(Usuario user) {
-        String roleName = user.getRol() != null ? user.getRol().getNombre() : "ROLE_USER";
-        // Asegurar que siempre tenga el prefijo ROLE_ para compatibilidad con hasRole()
-        if (!roleName.startsWith("ROLE_")) {
-            roleName = "ROLE_" + roleName;
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+            .map(rol -> {
+                String name = rol.getNombre().startsWith("ROLE_") ? rol.getNombre() : "ROLE_" + rol.getNombre();
+                return (GrantedAuthority) new SimpleGrantedAuthority(name);
+            })
+            .collect(Collectors.toList());
+
+        if (authorities.isEmpty()) {
+            authorities = List.of(new SimpleGrantedAuthority("ROLE_USUARIO"));
         }
-        List<GrantedAuthority> authorities = Collections.singletonList(
-                new SimpleGrantedAuthority(roleName)
-        );
 
         return new UserDetailsImpl(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getPasswordHash(),
-                user.getActivo(),
-                authorities
+            user.getId(),
+            user.getUsername(),
+            user.getEmail(),
+            user.getPasswordHash(),
+            user.getActivo() != null ? user.getActivo() : true,
+            authorities
         );
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        // Podrías mapear esto a 'bloqueado_hasta' si gustas, por ahora activo
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return activo;
-    }
+    @Override public Collection<? extends GrantedAuthority> getAuthorities() { return authorities; }
+    @Override public String getPassword() { return password; }
+    @Override public String getUsername() { return username; }
+    @Override public boolean isAccountNonExpired() { return true; }
+    @Override public boolean isAccountNonLocked() { return true; }
+    @Override public boolean isCredentialsNonExpired() { return true; }
+    @Override public boolean isEnabled() { return activo; }
 }

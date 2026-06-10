@@ -25,6 +25,10 @@ public class GrupoService {
     }
 
     public Grupo save(@NonNull Grupo entity) {
+        if (entity.getCodigo() == null || entity.getCodigo().isBlank()) {
+            long count = repository.count();
+            entity.setCodigo(String.format("GRP-%03d", count + 1));
+        }
         return repository.save(entity);
     }
 

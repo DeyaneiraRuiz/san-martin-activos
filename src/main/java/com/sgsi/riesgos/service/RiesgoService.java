@@ -25,6 +25,10 @@ public class RiesgoService {
     }
 
     public Riesgo save(@NonNull Riesgo entity) {
+        if (entity.getCodigo() == null || entity.getCodigo().isBlank()) {
+            long count = repository.count();
+            entity.setCodigo(String.format("R-%03d", count + 1));
+        }
         return repository.save(entity);
     }
 
