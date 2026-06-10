@@ -14,4 +14,10 @@ public class Amenaza {
 
     @Column(length = 150)
     private String nombre;
+
+    @Column(columnDefinition = "TEXT")
+    private String descripcion;
+
+    @Column(length = 100)
+    private String tipo;
 }

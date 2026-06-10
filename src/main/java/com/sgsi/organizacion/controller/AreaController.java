@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@PreAuthorize("hasRole('ADMINISTRADOR')")
 @RestController
 @RequestMapping("/api/areas")
 public class AreaController {
@@ -36,12 +35,14 @@ public class AreaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     @PostMapping
     public ResponseEntity<AreaDto.Response> create(@Valid @RequestBody AreaDto.Request request) {
         Area entity = mapper.toEntity(request);
         return ResponseEntity.ok(mapper.toResponse(service.save(entity)));
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     @PutMapping("/{id}")
     public ResponseEntity<AreaDto.Response> update(@PathVariable Integer id, @Valid @RequestBody AreaDto.Request request) {
         return service.findById(id)
@@ -53,6 +54,7 @@ public class AreaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         service.deleteById(id);

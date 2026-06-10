@@ -74,6 +74,18 @@ public class Incidente {
     @Column(name = "sla_vencimiento")
     private LocalDateTime slaVencimiento;
 
+    @Column(name = "fecha_incidente")
+    private LocalDateTime fechaIncidente;
+
+    @Column(name = "fecha_estimada_resolucion")
+    private LocalDateTime fechaEstimadaResolucion;
+
+    @Column(name = "fecha_real_resolucion")
+    private LocalDateTime fechaRealResolucion;
+
+    @Column(name = "notas_resolucion", columnDefinition = "TEXT")
+    private String notasResolucion;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "incidente_activo",

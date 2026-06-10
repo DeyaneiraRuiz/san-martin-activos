@@ -14,4 +14,7 @@ public class CatPeriodicidad {
 
     @Column(length = 50, unique = true)
     private String nombre;
+
+    @Column
+    private Integer dias;
 }
