@@ -1,87 +1,197 @@
 package com.sgsi.incidentes.mapper;
 
+import com.sgsi.activos.entity.Activo;
 import com.sgsi.incidentes.dto.*;
 import com.sgsi.incidentes.entity.*;
+import com.sgsi.security.entity.Usuario;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE)
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface IncidentesMapper {
+
+    // =====================================================
+    // SLA
+    // =====================================================
+
     SlaDto.Response toResponse(Sla entity);
 
     Sla toEntity(SlaDto.Request request);
 
+    void updateEntityFromRequest(
+            SlaDto.Request request,
+            @MappingTarget Sla entity);
+
+    // =====================================================
+    // CATEGORIA INCIDENTE
+    // =====================================================
+
     @Mapping(source = "responsable.id", target = "responsableId")
-    @Mapping(source = "grupo.id", target = "grupoId")
-    CategoriaIncidenteDto.Response toResponse(CategoriaIncidente entity);
+    CategoriaIncidenteDto.Response toResponse(
+            CategoriaIncidente entity);
 
     @Mapping(source = "responsableId", target = "responsable.id")
-    @Mapping(source = "grupoId", target = "grupo.id")
-    CategoriaIncidente toEntity(CategoriaIncidenteDto.Request request);
+    CategoriaIncidente toEntity(
+            CategoriaIncidenteDto.Request request);
+
+    @Mapping(source = "responsableId", target = "responsable.id")
+    void updateEntityFromRequest(
+            CategoriaIncidenteDto.Request request,
+            @MappingTarget CategoriaIncidente entity);
+
+    // =====================================================
+    // INCIDENTE (SOLO RESPONSE)
+    // =====================================================
 
     @Mapping(source = "categoria.id", target = "categoriaId")
-    @Mapping(source = "estado.id", target = "estadoId")
-    @Mapping(source = "tipoTicket.id", target = "tipoTicketId")
-    @Mapping(source = "reportadoPor.id", target = "reportadoPorId")
+    @Mapping(source = "categoria.nombre", target = "categoriaNombre")
+
+    @Mapping(source = "tipoIncidente.id", target = "tipoIncidenteId")
+    @Mapping(source = "tipoIncidente.nombre", target = "tipoIncidenteNombre")
+
+    @Mapping(source = "gravedadReportada.id", target = "gravedadReportadaId")
+    @Mapping(source = "gravedadReportada.nombre", target = "gravedadReportadaNombre")
+
+    @Mapping(source = "reportador.id", target = "reportadorId")
+    @Mapping(source = "reportador.nombreCompleto", target = "reportadorNombre")
+
     @Mapping(source = "asignadoA.id", target = "asignadoAId")
-    IncidenteDto.Response toResponse(Incidente entity);
+    @Mapping(source = "asignadoA.nombreCompleto", target = "asignadoANombre")
 
-    @Mapping(source = "categoriaId", target = "categoria.id")
+    @Mapping(source = "asignadoPor.id", target = "asignadoPorId")
+    @Mapping(source = "asignadoPor.nombreCompleto", target = "asignadoPorNombre")
+
+    @Mapping(source = "impactoReal.id", target = "impactoRealId")
+    @Mapping(source = "impactoReal.nombre", target = "impactoRealNombre")
+
+    @Mapping(source = "prioridad.id", target = "prioridadId")
+    @Mapping(source = "prioridad.nombre", target = "prioridadNombre")
+
+    @Mapping(source = "cerradoPor.id", target = "cerradoPorId")
+    @Mapping(source = "cerradoPor.nombreCompleto", target = "cerradoPorNombre")
+
+    @Mapping(source = "estado.id", target = "estadoId")
+    @Mapping(source = "estado.nombre", target = "estadoNombre")
+
+    @Mapping(source = "reabiertoPor.id", target = "reabiertoPorId")
+    @Mapping(source = "reabiertoPor.nombreCompleto", target = "reabiertoPorNombre")
+
+    @Mapping(source = "ultimoModificadoPor.id", target = "ultimoModificadoPorId")
+    @Mapping(source = "ultimoModificadoPor.nombreCompleto", target = "ultimoModificadoPorNombre")
+
+    @Mapping(source = "observadores", target = "observadorIds")
+    @Mapping(source = "activosAfectados", target = "activoIds")
+    IncidenteDto.Response toResponse(
+            Incidente entity);
+
+    // =====================================================
+    // EVIDENCIAS
+    // =====================================================
+
+    @Mapping(source = "incidente.id", target = "incidenteId")
+    IncidenteEvidenciaDto.Response toResponse(
+            IncidenteEvidencia entity);
+
+    @Mapping(source = "incidenteId", target = "incidente.id")
+    IncidenteEvidencia toEntity(
+            IncidenteEvidenciaDto.Request request);
+
+    @Mapping(source = "incidenteId", target = "incidente.id")
+    void updateEntityFromRequest(
+            IncidenteEvidenciaDto.Request request,
+            @MappingTarget IncidenteEvidencia entity);
+
+    // =====================================================
+    // HISTORIAL
+    // =====================================================
+
+    @Mapping(source = "incidente.id", target = "incidenteId")
+    @Mapping(source = "estado.id", target = "estadoId")
+    @Mapping(source = "changedBy.id", target = "changedById")
+    IncidenteHistorialDto.Response toResponse(
+            IncidenteHistorial entity);
+
+    @Mapping(source = "incidenteId", target = "incidente.id")
     @Mapping(source = "estadoId", target = "estado.id")
-    @Mapping(source = "tipoTicketId", target = "tipoTicket.id")
-    @Mapping(source = "reportadoPorId", target = "reportadoPor.id")
-    @Mapping(source = "asignadoAId", target = "asignadoA.id")
-    Incidente toEntity(IncidenteDto.Request request);
-
-    @Mapping(source = "incidente.id", target = "incidenteId")
-    @Mapping(source = "createdBy", target = "subidoPorId")
-    IncidenteEvidenciaDto.Response toResponse(IncidenteEvidencia entity);
+    @Mapping(source = "changedById", target = "changedBy.id")
+    IncidenteHistorial toEntity(
+            IncidenteHistorialDto.Request request);
 
     @Mapping(source = "incidenteId", target = "incidente.id")
-    @Mapping(source = "subidoPorId", target = "createdBy")
-    IncidenteEvidencia toEntity(IncidenteEvidenciaDto.Request request);
+    @Mapping(source = "estadoId", target = "estado.id")
+    @Mapping(source = "changedById", target = "changedBy.id")
+    void updateEntityFromRequest(
+            IncidenteHistorialDto.Request request,
+            @MappingTarget IncidenteHistorial entity);
 
-    @Mapping(source = "incidente.id", target = "incidenteId")
-    @Mapping(source = "changedBy.id", target = "modificadoPorId")
-    IncidenteHistorialDto.Response toResponse(IncidenteHistorial entity);
-
-    @Mapping(source = "incidenteId", target = "incidente.id")
-    @Mapping(source = "modificadoPorId", target = "changedBy.id")
-    IncidenteHistorial toEntity(IncidenteHistorialDto.Request request);
+    // =====================================================
+    // VINCULOS
+    // =====================================================
 
     @Mapping(source = "incidente.id", target = "incidenteId")
     @Mapping(source = "incidenteRelacionado.id", target = "incidenteRelacionadoId")
     @Mapping(source = "tipoVinculo.id", target = "tipoVinculoId")
-    IncidenteVinculoDto.Response toResponse(IncidenteVinculo entity);
+    IncidenteVinculoDto.Response toResponse(
+            IncidenteVinculo entity);
 
     @Mapping(source = "incidenteId", target = "incidente.id")
     @Mapping(source = "incidenteRelacionadoId", target = "incidenteRelacionado.id")
     @Mapping(source = "tipoVinculoId", target = "tipoVinculo.id")
-    IncidenteVinculo toEntity(IncidenteVinculoDto.Request request);
-    void updateEntityFromRequest(SlaDto.Request request, @MappingTarget Sla entity);
+    IncidenteVinculo toEntity(
+            IncidenteVinculoDto.Request request);
 
-    @Mapping(source = "responsableId", target = "responsable.id")
-    @Mapping(source = "grupoId", target = "grupo.id")
-    void updateEntityFromRequest(CategoriaIncidenteDto.Request request, @MappingTarget CategoriaIncidente entity);
+    @Mapping(source = "incidenteId", target = "incidente.id")
+    @Mapping(source = "incidenteRelacionadoId", target = "incidenteRelacionado.id")
+    @Mapping(source = "tipoVinculoId", target = "tipoVinculo.id")
+    void updateEntityFromRequest(
+            IncidenteVinculoDto.Request request,
+            @MappingTarget IncidenteVinculo entity);
+
+    // =====================================================
+    // TIPO INCIDENTE
+    // =====================================================
+
+    @Mapping(source = "categoria.id", target = "categoriaId")
+    TipoIncidenteDto.Response toResponse(
+            TipoIncidente entity);
 
     @Mapping(source = "categoriaId", target = "categoria.id")
-    @Mapping(source = "estadoId", target = "estado.id")
-    @Mapping(source = "tipoTicketId", target = "tipoTicket.id")
-    @Mapping(source = "reportadoPorId", target = "reportadoPor.id")
-    @Mapping(source = "asignadoAId", target = "asignadoA.id")
-    void updateEntityFromRequest(IncidenteDto.Request request, @MappingTarget Incidente entity);
+    TipoIncidente toEntity(
+            TipoIncidenteDto.Request request);
 
-    @Mapping(source = "incidenteId", target = "incidente.id")
-    @Mapping(source = "subidoPorId", target = "createdBy")
-    void updateEntityFromRequest(IncidenteEvidenciaDto.Request request, @MappingTarget IncidenteEvidencia entity);
+    @Mapping(source = "categoriaId", target = "categoria.id")
+    void updateEntityFromRequest(
+            TipoIncidenteDto.Request request,
+            @MappingTarget TipoIncidente entity);
 
-    @Mapping(source = "incidenteId", target = "incidente.id")
-    @Mapping(source = "modificadoPorId", target = "changedBy.id")
-    void updateEntityFromRequest(IncidenteHistorialDto.Request request, @MappingTarget IncidenteHistorial entity);
+    // =====================================================
+    // HELPERS
+    // =====================================================
 
-    @Mapping(source = "incidenteId", target = "incidente.id")
-    @Mapping(source = "incidenteRelacionadoId", target = "incidenteRelacionado.id")
-    @Mapping(source = "tipoVinculoId", target = "tipoVinculo.id")
-    void updateEntityFromRequest(IncidenteVinculoDto.Request request, @MappingTarget IncidenteVinculo entity);
+    default Set<Integer> mapUsuarios(Set<Usuario> usuarios) {
+
+        if (usuarios == null) {
+            return null;
+        }
+
+        return usuarios.stream()
+                .map(Usuario::getId)
+                .collect(Collectors.toSet());
+    }
+
+    default Set<Integer> mapActivos(Set<Activo> activos) {
+
+        if (activos == null) {
+            return null;
+        }
+
+        return activos.stream()
+                .map(Activo::getId)
+                .collect(Collectors.toSet());
+    }
 }

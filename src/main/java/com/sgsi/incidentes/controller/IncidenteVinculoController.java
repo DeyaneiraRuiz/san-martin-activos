@@ -8,51 +8,94 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/incidente-vinculos")
 @RequiredArgsConstructor
 public class IncidenteVinculoController {
 
-    private final IncidenteVinculoService service;
+    private final IncidenteVinculoService vinculoService;
     private final IncidentesMapper mapper;
 
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR','TECNICO','ANALISTA_SEGURIDAD')")
     @GetMapping
     public ResponseEntity<List<IncidenteVinculoDto.Response>> findAll() {
-        return ResponseEntity.ok(service.findAll().stream()
-                .map(mapper::toResponse).collect(Collectors.toList()));
+
+        List<IncidenteVinculoDto.Response> response =
+                vinculoService.findAll()
+                        .stream()
+                        .map(mapper::toResponse)
+                        .toList();
+
+        return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR','TECNICO','ANALISTA_SEGURIDAD')")
     @GetMapping("/{id}")
-    public ResponseEntity<IncidenteVinculoDto.Response> findById(@PathVariable Integer id) {
-        return service.findById(id).map(mapper::toResponse)
-                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<IncidenteVinculoDto.Response> findById(
+            @PathVariable Integer id) {
+
+        return vinculoService.findById(id)
+                .map(mapper::toResponse)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR','TECNICO')")
     @PostMapping
-    public ResponseEntity<IncidenteVinculoDto.Response> create(@Valid @RequestBody IncidenteVinculoDto.Request request) {
-        IncidenteVinculo saved = service.save(mapper.toEntity(request));
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(saved));
+    public ResponseEntity<IncidenteVinculoDto.Response> create(
+            @Valid @RequestBody IncidenteVinculoDto.Request request) {
+
+        IncidenteVinculo vinculo =
+                mapper.toEntity(request);
+
+        IncidenteVinculo saved =
+                vinculoService.crear(vinculo);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(mapper.toResponse(saved));
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR','TECNICO')")
     @PutMapping("/{id}")
-    public ResponseEntity<IncidenteVinculoDto.Response> update(@PathVariable Integer id, @Valid @RequestBody IncidenteVinculoDto.Request request) {
-        return service.findById(id).map(existing -> {
-            mapper.updateEntityFromRequest(request, existing);
-            return ResponseEntity.ok(mapper.toResponse(service.save(existing)));
-        }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<IncidenteVinculoDto.Response> update(
+            @PathVariable Integer id,
+            @Valid @RequestBody IncidenteVinculoDto.Request request) {
+
+        return vinculoService.findById(id)
+                .map(existing -> {
+
+                    mapper.updateEntityFromRequest(
+                            request,
+                            existing
+                    );
+
+                    IncidenteVinculo updated =
+                            vinculoService.actualizar(existing);
+
+                    return ResponseEntity.ok(
+                            mapper.toResponse(updated)
+                    );
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        if (service.findById(id).isPresent()) {
-            service.deleteById(id);
-            return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> delete(
+            @PathVariable Integer id) {
+
+        if (vinculoService.findById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+
+        vinculoService.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

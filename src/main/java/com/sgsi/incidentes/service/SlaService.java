@@ -1,7 +1,5 @@
 package com.sgsi.incidentes.service;
 
-import org.springframework.lang.NonNull;
-
 import com.sgsi.incidentes.entity.Sla;
 import com.sgsi.incidentes.repository.SlaRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,15 +18,19 @@ public class SlaService {
         return repository.findAll();
     }
 
-    public Optional<Sla> findById(@NonNull Integer id) {
+    public Optional<Sla> findById(Integer id) {
         return repository.findById(id);
     }
 
-    public Sla save(@NonNull Sla entity) {
+    public Sla crear(Sla entity) {
         return repository.save(entity);
     }
 
-    public void deleteById(@NonNull Integer id) {
+    public Sla actualizar(Sla entity) {
+        return repository.save(entity);
+    }
+
+    public void deleteById(Integer id) {
         repository.deleteById(id);
     }
 }

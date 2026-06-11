@@ -15,8 +15,31 @@ public class IncidenteEvidenciaService {
 
     private final IncidenteEvidenciaRepository repository;
 
-    public List<IncidenteEvidencia> findAll() { return repository.findAll(); }
-    public Optional<IncidenteEvidencia> findById(@NonNull Integer id) { return repository.findById(id); }
-    public IncidenteEvidencia save(@NonNull IncidenteEvidencia entity) { return repository.save(entity); }
-    public void deleteById(@NonNull Integer id) { repository.deleteById(id); }
+    public List<IncidenteEvidencia> findAll() {
+        return repository.findAll();
+    }
+
+    public Optional<IncidenteEvidencia> findById(
+            @NonNull Integer id) {
+
+        return repository.findById(id);
+    }
+
+    public IncidenteEvidencia crear(
+            @NonNull IncidenteEvidencia evidencia) {
+
+        return repository.save(evidencia);
+    }
+
+    public IncidenteEvidencia actualizar(
+            @NonNull IncidenteEvidencia evidencia) {
+
+        return repository.save(evidencia);
+    }
+
+    public void deleteById(
+            @NonNull Integer id) {
+
+        repository.deleteById(id);
+    }
 }

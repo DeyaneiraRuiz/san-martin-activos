@@ -3,12 +3,13 @@ package com.sgsi.incidentes.entity;
 import com.sgsi.activos.entity.Activo;
 import com.sgsi.catalogos.entity.CatEstadoIncidente;
 import com.sgsi.catalogos.entity.CatNivel;
-import com.sgsi.catalogos.entity.CatTipoTicket;
-import com.sgsi.riesgos.entity.Riesgo;
 import com.sgsi.security.entity.Usuario;
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Data
@@ -20,95 +21,166 @@ public class Incidente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    // ============================================
+    // DATOS GENERALES
+    // ============================================
+
     @Column(length = 30, unique = true)
     private String codigo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tipo_ticket_id")
-    private CatTipoTicket tipoTicket;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoria_id")
-    private CategoriaIncidente categoria;
-
-    @Column(length = 255)
+    @Column(nullable = false, length = 255)
     private String titulo;
 
     @Column(columnDefinition = "TEXT")
     private String descripcion;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "impacto_id")
-    private CatNivel impacto;
+    @JoinColumn(name = "categoria_id")
+    private CategoriaIncidente categoria;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "urgencia_id")
-    private CatNivel urgencia;
+    @JoinColumn(name = "tipo_incidente_id")
+    private TipoIncidente tipoIncidente;
+
+    /**
+     * gravedadReportada
+     * (bajo, medio, alto, crítico)
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gravedad_reportada_id")
+    private CatNivel gravedadReportada;
+
+    @Column(name = "fecha_deteccion")
+    private LocalDateTime fechaDeteccion;
+
+    @Column(name = "fecha_reporte")
+    private LocalDateTime fechaReporte;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reportador_id")
+    private Usuario reportador;
+
+    // ============================================
+    // SEGUIMIENTO
+    // ============================================
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "asignado_a_id")
+    private Usuario asignadoA;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "asignado_por_id")
+    private Usuario asignadoPor;
+
+    @Column(name = "fecha_asignacion")
+    private LocalDateTime fechaAsignacion;
+
+    /**
+     * Evaluación técnica
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "impacto_real_id")
+    private CatNivel impactoReal;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prioridad_id")
     private CatNivel prioridad;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "estado_id")
-    private CatEstadoIncidente estado;
+    @Column(name = "causa_raiz", columnDefinition = "TEXT")
+    private String causaRaiz;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sla_id")
-    private Sla sla;
+    @Column(name = "solucion_propuesta", columnDefinition = "TEXT")
+    private String solucionPropuesta;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reportado_por")
-    private Usuario reportadoPor;
+    /**
+     * Plan de acción
+     */
+    @Column(name = "plan_accion", columnDefinition = "TEXT")
+    private String planAccion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "asignado_a")
-    private Usuario asignadoA;
+    @Column(name = "fecha_compromiso")
+    private LocalDateTime fechaCompromiso;
 
-    @Column(name = "fecha_reporte")
-    private LocalDateTime fechaReporte;
+    /**
+     * Resolución
+     */
+    @Column(name = "descripcion_solucion", columnDefinition = "TEXT")
+    private String descripcionSolucion;
+
+    @Column(name = "fecha_resolucion")
+    private LocalDateTime fechaResolucion;
+
+    /**
+     * Cierre
+     */
+    @Column(name = "comentario_cierre", columnDefinition = "TEXT")
+    private String comentarioCierre;
 
     @Column(name = "fecha_cierre")
     private LocalDateTime fechaCierre;
 
-    @Column(name = "sla_vencimiento")
-    private LocalDateTime slaVencimiento;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cerrado_por_id")
+    private Usuario cerradoPor;
 
-    @Column(name = "fecha_incidente")
-    private LocalDateTime fechaIncidente;
-
-    @Column(name = "fecha_estimada_resolucion")
-    private LocalDateTime fechaEstimadaResolucion;
-
-    @Column(name = "fecha_real_resolucion")
-    private LocalDateTime fechaRealResolucion;
-
-    @Column(name = "notas_resolucion", columnDefinition = "TEXT")
-    private String notasResolucion;
+    // ============================================
+    // OBSERVADORES
+    // ============================================
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "incidente_activo",
-        joinColumns = @JoinColumn(name = "incidente_id"),
-        inverseJoinColumns = @JoinColumn(name = "activo_id")
+            name = "incidente_observador",
+            joinColumns = @JoinColumn(name = "incidente_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id")
     )
-    private Set<Activo> activos;
+    private Set<Usuario> observadores = new HashSet<>();
+
+    // ============================================
+    // ACTIVOS AFECTADOS
+    // ============================================
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "incidente_observador",
-        joinColumns = @JoinColumn(name = "incidente_id"),
-        inverseJoinColumns = @JoinColumn(name = "usuario_id")
+            name = "incidente_activo",
+            joinColumns = @JoinColumn(name = "incidente_id"),
+            inverseJoinColumns = @JoinColumn(name = "activo_id")
     )
-    private Set<Usuario> observadores;
+    private Set<Activo> activosAfectados = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "incidente_riesgo",
-        joinColumns = @JoinColumn(name = "incidente_id"),
-        inverseJoinColumns = @JoinColumn(name = "riesgo_id")
-    )
-    private Set<Riesgo> riesgosAsociados;
+    // ============================================
+    // ESTADO
+    // ============================================
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "estado_id")
+    private CatEstadoIncidente estado;
+
+    // ============================================
+    // REAPERTURA
+    // ============================================
+
+    private Boolean reabierto = false;
+
+    @Column(name = "motivo_reapertura", columnDefinition = "TEXT")
+    private String motivoReapertura;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reabierto_por_id")
+    private Usuario reabiertoPor;
+
+    @Column(name = "fecha_reapertura")
+    private LocalDateTime fechaReapertura;
+
+    // ============================================
+    // AUDITORÍA
+    // ============================================
+
+    @Column(name = "ultima_modificacion")
+    private LocalDateTime ultimaModificacion;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ultimo_modificado_por_id")
+    private Usuario ultimoModificadoPor;
 
     @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -121,4 +193,9 @@ public class Incidente {
 
     @Column(name = "updated_by")
     private Integer updatedBy;
+
+    public Optional<Incidente> map(Object object) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'map'");
+    }
 }

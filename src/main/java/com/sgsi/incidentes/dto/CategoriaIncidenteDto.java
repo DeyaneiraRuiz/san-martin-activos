@@ -6,15 +6,22 @@ import java.time.LocalDateTime;
 
 public interface CategoriaIncidenteDto {
     record Request(
-            @NotBlank(message = "El nombre es obligatorio") String nombre,
+            @NotBlank(message = "El nombre es obligatorio")
+            String nombre,
             String descripcion,
             String codigo,
             String estado,
-            Integer responsableId,
-            Integer grupoId) {
-    }
+            Integer responsableId
 
-    record Response(Integer id, String codigo, String nombre, String descripcion,
-                    String estado, Integer responsableId, Integer grupoId, LocalDateTime createdAt) {
-    }
+    ) {}
+
+    record Response(
+            Integer id,
+            String codigo,
+            String nombre,
+            String descripcion,
+            String estado,
+            Integer responsableId,
+            LocalDateTime createdAt
+    ) {}
 }

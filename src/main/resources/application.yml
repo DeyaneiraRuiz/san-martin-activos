@@ -1,0 +1,9 @@
+app:
+  mailtrap:
+    token: 3c78608ef0a8349c7897b324dc32952c
+  frontend:
+    url: http://localhost:4769
+
+logging:
+  level:
+    com.sgsi.notificaciones: DEBUG

@@ -25,7 +25,7 @@ public class IncidenteSecurity {
         }
 
         // Es el reportero
-        if (incidente.getReportadoPor() != null && username.equals(incidente.getReportadoPor().getUsername())) {
+        if (incidente.getReportador() != null && username.equals(incidente.getReportador().getUsername())) {
             return true;
         }
 

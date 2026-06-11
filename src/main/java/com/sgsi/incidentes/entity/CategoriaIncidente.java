@@ -1,6 +1,4 @@
 package com.sgsi.incidentes.entity;
-
-import com.sgsi.organizacion.entity.Grupo;
 import com.sgsi.security.entity.Usuario;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -29,10 +27,6 @@ public class CategoriaIncidente {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "responsable_id")
     private Usuario responsable;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "grupo_id")
-    private Grupo grupo;
 
     @Column(name = "created_at", insertable = false, updatable = false)
     private java.time.LocalDateTime createdAt;
