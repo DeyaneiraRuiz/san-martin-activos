@@ -2,6 +2,7 @@ package com.sgsi.procesos.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -12,7 +13,7 @@ public class Control {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 30)
+    @Column(length = 30, unique = true)
     private String codigo;
 
     @Column(name = "codigo_iso", length = 30)
@@ -39,7 +40,7 @@ public class Control {
     @Column(name = "tiene_evidencia")
     private Boolean tieneEvidencia;
 
-    @Column(name = "tiene_responsables")
+    @Column(name = "tiene_responsables_asociados")
     private Boolean tieneResponsablesAsociados;
 
     @Column(name = "calificacion_disenio")
@@ -66,14 +67,14 @@ public class Control {
     private String estado = "activo";
 
     @Column(name = "created_at", insertable = false, updatable = false)
-    private java.time.LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at", insertable = false, updatable = false)
-    private java.time.LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
-    @Column(name = "created_by", length = 100)
+    @Column(name = "creado_por", length = 100)
     private String creadoPor;
 
-    @Column(name = "updated_by", length = 100)
+    @Column(name = "modificado_por", length = 100)
     private String modificadoPor;
 }

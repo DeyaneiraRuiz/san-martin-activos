@@ -43,10 +43,10 @@ public class RiesgoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<RiesgoDto.Response> update(@PathVariable Integer id, @Valid @RequestBody RiesgoDto.Request request) {
-        return service.findById(id).map(existing -> {
-            mapper.updateEntityFromRequest(request, existing);
-            return ResponseEntity.ok(mapper.toResponse(service.save(existing)));
-        }).orElse(ResponseEntity.notFound().build());
+        return service.update(id, request)
+                .map(mapper::toResponse)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PreAuthorize("hasRole('ADMINISTRADOR')")

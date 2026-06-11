@@ -13,7 +13,7 @@ public class TipoIncidente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 30)
+    @Column(length = 30, unique = true)
     private String codigo;
 
     @Column(length = 150)
@@ -32,9 +32,9 @@ public class TipoIncidente {
     @Column(name = "updated_at", insertable = false, updatable = false)
     private LocalDateTime updatedAt;
 
-    @Column(name = "created_by", length = 100)
+    @Column(name = "creado_por", length = 100)
     private String creadoPor;
 
-    @Column(name = "updated_by", length = 100)
+    @Column(name = "modificado_por", length = 100)
     private String modificadoPor;
 }

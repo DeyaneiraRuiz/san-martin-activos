@@ -25,6 +25,10 @@ public class CategoriaIncidenteService {
     }
 
     public CategoriaIncidente save(@NonNull CategoriaIncidente entity) {
+        if (entity.getCodigo() == null || entity.getCodigo().isBlank()) {
+            long count = repository.count();
+            entity.setCodigo(String.format("CAT-INC-%03d", count + 1));
+        }
         return repository.save(entity);
     }
 

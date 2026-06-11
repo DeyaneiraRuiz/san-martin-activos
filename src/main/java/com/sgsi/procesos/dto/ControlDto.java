@@ -2,8 +2,6 @@ package com.sgsi.procesos.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-import java.time.LocalDateTime;
-
 public interface ControlDto {
     record Request(
             String codigoIso,
@@ -21,7 +19,6 @@ public interface ControlDto {
             Boolean evidenciaEsEfectiva,
             Integer calificacionEjecucion,
             Integer solidez,
-            String archivoNombre,
             String estado
     ) {}
 
@@ -43,11 +40,10 @@ public interface ControlDto {
             Boolean evidenciaEsEfectiva,
             Integer calificacionEjecucion,
             Integer solidez,
-            String archivoNombre,
             String estado,
             String creadoPor,
             String modificadoPor,
-            LocalDateTime createdAt,
-            LocalDateTime updatedAt
+            java.time.LocalDateTime createdAt,
+            java.time.LocalDateTime updatedAt
     ) {}
 }

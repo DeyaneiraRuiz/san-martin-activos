@@ -1,7 +1,6 @@
 package com.sgsi.procesos.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public interface ProcesoDto {

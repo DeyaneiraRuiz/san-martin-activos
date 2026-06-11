@@ -4,6 +4,7 @@ import com.sgsi.organizacion.entity.Grupo;
 import com.sgsi.security.entity.Usuario;
 import jakarta.persistence.*;
 import lombok.Data;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -14,7 +15,7 @@ public class CategoriaIncidente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 30)
+    @Column(length = 30, unique = true)
     private String codigo;
 
     @Column(length = 100)
@@ -35,5 +36,5 @@ public class CategoriaIncidente {
     private Grupo grupo;
 
     @Column(name = "created_at", insertable = false, updatable = false)
-    private java.time.LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 }

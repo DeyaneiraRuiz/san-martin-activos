@@ -1,7 +1,9 @@
 package com.sgsi.procesos.service;
 
 import org.springframework.lang.NonNull;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.sgsi.procesos.dto.ControlDto;
 import com.sgsi.procesos.entity.Control;
 import com.sgsi.procesos.repository.ControlRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,29 @@ public class ControlService {
             entity.setCodigo(String.format("CTRL-%03d", count + 1));
         }
         return repository.save(entity);
+    }
+
+    @Transactional
+    public Optional<Control> update(@NonNull Integer id, @NonNull ControlDto.Request request) {
+        return repository.findById(id).map(existing -> {
+            existing.setCodigoIso(request.codigoIso());
+            existing.setNombre(request.nombre());
+            existing.setDescripcion(request.descripcion());
+            existing.setTipoControl(request.tipoControl());
+            existing.setTipoEjecucion(request.tipoEjecucion());
+            existing.setSeEjecutaConFrecuencia(request.seEjecutaConFrecuencia());
+            existing.setEstaDocumentado(request.estaDocumentado());
+            existing.setTieneEvidencia(request.tieneEvidencia());
+            existing.setTieneResponsablesAsociados(request.tieneResponsablesAsociados());
+            existing.setCalificacionDisenio(request.calificacionDisenio());
+            existing.setSeHanPresentadoEventos(request.seHanPresentadoEventos());
+            existing.setDisenioEsEfectivo(request.disenioEsEfectivo());
+            existing.setEvidenciaEsEfectiva(request.evidenciaEsEfectiva());
+            existing.setCalificacionEjecucion(request.calificacionEjecucion());
+            existing.setSolidez(request.solidez());
+            if (request.estado() != null) existing.setEstado(request.estado());
+            return repository.save(existing);
+        });
     }
 
     public void deleteById(@NonNull Integer id) {

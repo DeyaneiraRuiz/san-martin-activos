@@ -15,7 +15,7 @@ public class Proceso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 30)
+    @Column(length = 30, unique = true)
     private String codigo;
 
     @Column(length = 150)

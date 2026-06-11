@@ -4,6 +4,7 @@ import com.sgsi.activos.entity.Activo;
 import com.sgsi.procesos.entity.Proceso;
 import jakarta.persistence.*;
 import lombok.Data;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class Riesgo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 30)
+    @Column(length = 30, unique = true)
     private String codigo;
 
     @Column(length = 150)
@@ -53,7 +54,7 @@ public class Riesgo {
     private String estado = "activo";
 
     @Column(name = "fecha_identificacion")
-    private java.time.LocalDateTime fechaIdentificacion;
+    private LocalDate fechaIdentificacion;
 
     @Column(name = "archivo_nombre", length = 255)
     private String archivoNombre;
@@ -84,6 +85,9 @@ public class Riesgo {
 
     @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", insertable = false, updatable = false)
+    private LocalDateTime updatedAt;
 
     @Column(name = "created_by")
     private Integer createdBy;

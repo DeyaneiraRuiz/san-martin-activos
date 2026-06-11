@@ -17,6 +17,9 @@ public interface ActivoDto {
             Integer confidencialidad,
             Integer integridad,
             Integer disponibilidad,
+            Integer confidencialidadAlmacenamiento,
+            Integer probabilidad,
+            Integer impacto,
             String ubicacion,
             LocalDate fechaAdquisicion
     ) {}
@@ -37,6 +40,8 @@ public interface ActivoDto {
             Integer integridad,
             Integer disponibilidad,
             Integer confidencialidadAlmacenamiento,
+            Integer probabilidad,
+            Integer impacto,
             String ubicacion,
             LocalDate fechaAdquisicion,
             LocalDateTime createdAt,

@@ -51,11 +51,10 @@ public class ActivoController {
     @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'RESPONSABLE_AREA')")
     @PutMapping("/{id}")
     public ResponseEntity<ActivoDto.Response> update(@PathVariable Integer id, @Valid @RequestBody ActivoDto.Request request) {
-        return service.findById(id).map(existing -> {
-            mapper.updateEntityFromRequest(request, existing);
-            Activo savedEntity = service.save(existing);
-            return ResponseEntity.ok(mapper.toResponse(savedEntity));
-        }).orElse(ResponseEntity.notFound().build());
+        return service.update(id, request)
+                .map(mapper::toResponse)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PreAuthorize("hasRole('ADMINISTRADOR')")

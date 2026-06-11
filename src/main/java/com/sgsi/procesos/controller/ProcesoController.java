@@ -46,10 +46,10 @@ public class ProcesoController {
     @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'RESPONSABLE_AREA')")
     @PutMapping("/{id}")
     public ResponseEntity<ProcesoDto.Response> update(@PathVariable Integer id, @Valid @RequestBody ProcesoDto.Request request) {
-        return service.findById(id).map(existing -> {
-            mapper.updateEntityFromRequest(request, existing);
-            return ResponseEntity.ok(mapper.toResponse(service.save(existing)));
-        }).orElse(ResponseEntity.notFound().build());
+        return service.update(id, request)
+                .map(mapper::toResponse)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PreAuthorize("hasRole('ADMINISTRADOR')")

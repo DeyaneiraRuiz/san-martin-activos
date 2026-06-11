@@ -46,9 +46,9 @@ public class GrupoController {
     public ResponseEntity<GrupoDto.Response> update(@PathVariable Integer id, @Valid @RequestBody GrupoDto.Request request) {
         return service.findById(id)
                 .map(existing -> {
-                    Grupo entity = mapper.toEntity(request);
-                    entity.setId(id);
-                    return ResponseEntity.ok(mapper.toResponse(service.save(entity)));
+                    existing.setNombre(request.nombre());
+                    existing.setDescripcion(request.descripcion());
+                    return ResponseEntity.ok(mapper.toResponse(service.save(existing)));
                 })
                 .orElse(ResponseEntity.notFound().build());
     }

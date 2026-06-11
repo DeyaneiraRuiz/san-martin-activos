@@ -1,14 +1,14 @@
 package com.sgsi.riesgos.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public interface RiesgoDto {
     record Request(
-            @NotBlank(message = "La descripción es obligatoria") String descripcion,
             String nombre,
+            @NotBlank(message = "La descripción es obligatoria") String descripcion,
             String impactoNegocio,
             String consecuencia,
             String impacto,
@@ -18,6 +18,7 @@ public interface RiesgoDto {
             Integer criticidadResidual,
             String categoria,
             String estado,
+            LocalDate fechaIdentificacion,
             String archivoNombre,
             Integer amenazaId,
             Integer vulnerabilidadId
@@ -37,10 +38,10 @@ public interface RiesgoDto {
             Integer criticidadResidual,
             String categoria,
             String estado,
+            LocalDate fechaIdentificacion,
             String archivoNombre,
-            LocalDateTime fechaIdentificacion,
-            LocalDateTime createdAt,
             Integer amenazaId,
-            Integer vulnerabilidadId
+            Integer vulnerabilidadId,
+            LocalDateTime createdAt
     ) {}
 }
